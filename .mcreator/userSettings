@@ -1,0 +1,20 @@
+{
+  "workspacePanelIconSize": "TILES",
+  "workspacePanelSortType": "CREATED",
+  "workspacePanelSortAscending": true,
+  "projectBrowserSplitPos": 342,
+  "projectBrowserState": {
+    "expandedPaths": [
+      "[, High CMD]",
+      "[, High CMD, Source (Gradle)]",
+      "[, High CMD, Source (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net]",
+      "[, High CMD, Source (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator]",
+      "[, High CMD, Source (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator\\highcmdforge]",
+      "[, High CMD, Source (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator\\highcmdforge, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator\\highcmdforge\\mixin]",
+      "[, High CMD, Source (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator\\highcmdforge, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\java\\net\\mcreator\\highcmdforge\\network]",
+      "[, High CMD, Resources (Gradle)]",
+      "[, High CMD, Resources (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\resources\\META-INF]",
+      "[, High CMD, Resources (Gradle), C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\resources\\META-INF, C:\\Users\\ryang\\MCreatorWorkspaces\\high_cmdforge\\src\\main\\resources\\META-INF\\services]"
+    ]
+  }
+}

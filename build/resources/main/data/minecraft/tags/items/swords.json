@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "high_cmdforge:death_terminal",
+    "high_cmdforge:cmd_swordlvl_3",
+    "high_cmdforge:cmd_swordlvl_2",
+    "high_cmdforge:cmd_sword"
+  ]
+}

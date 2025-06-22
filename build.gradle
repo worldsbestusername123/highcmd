@@ -1,0 +1,98 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = '1.0'
+group = 'com.yourname.modid'
+archivesBaseName = 'modid'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    copyIdeResources = true
+
+    runs {
+        client {
+        }
+
+        server {
+        }
+
+        configureEach {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+jar {
+    manifest {
+        attributes(
+                'Premain-Class': 'agent.Premain',
+                'Can-Redefine-Classes': 'true',
+                'FMLCorePlugin': 'net.mcreator.highcmdforge.Interception3',
+                'FMLCorePluginContainsMod': 'true'
+        )
+    }
+}
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from('src/main/resources') {
+        include 'META-INF/services/**'
+    }
+
+    jar {
+        from {
+            configurations.runtimeClasspath
+                    .filter { it.isDirectory() }
+                    .collect { it }
+        }
+        from('src/main/resources') {
+            include 'META-INF/services/**'
+        }
+    }
+    jar {
+        from {
+            file("src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService")
+        }
+    }
+    minecraft {
+        runs {
+            client {
+                args "--fml.coreMods.load=net.mcreator.highcmdforge.Interception3"
+            }
+        }
+    }
+
+    mixin {
+        add sourceSets.main, "modid.refmap.json"
+
+        config "Amodid.mixins.json"
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    }
+
+    apply from: 'mcreator.gradle'
+
+}

@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="Academic Free License v3.0"
+
+[[mods]]
+modId="high_cmdforge"
+version="1.0.0"
+displayName="High CMD"
+displayURL="https://mcreator.net"
+logoFile="logo.png"
+credits="Made using MCreator, Code by hello"
+authors="hello/worldsbestusername123"
+description="Mod with new CMD weapons and one powerful terminal weapon!"
+
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.high_cmdforge]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1]"
+    ordering="AFTER"
+    side="BOTH"
+
+
+
+
+# Start of user code block dependencies configuration
+# End of user code block dependencies configuration

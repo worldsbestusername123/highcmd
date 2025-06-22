@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Premain-Class: agent.Premain
+Can-Redefine-Classes: true
+FMLCorePlugin: net.mcreator.highcmdforge.Interception3
+FMLCorePluginContainsMod: true
+MixinConfigs: Amodid.mixins.json
+
