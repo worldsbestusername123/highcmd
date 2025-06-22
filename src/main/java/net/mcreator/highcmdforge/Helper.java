@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 
 public final class Helper {
     private static final Unsafe UNSAFE;
-    private static final Lookup lookup;
+    public static final Lookup lookup;
     private static final Object internalUNSAFE;
     private static MethodHandle objectFieldOffsetInternal;
 
@@ -39,7 +39,7 @@ public final class Helper {
         }
     }
 
-    private static Unsafe getUnsafe() {
+    public static Unsafe getUnsafe() {
         try {
             Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
             theUnsafe.setAccessible(true);

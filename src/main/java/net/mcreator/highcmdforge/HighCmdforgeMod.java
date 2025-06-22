@@ -1,5 +1,6 @@
 package net.mcreator.highcmdforge;
 
+import agent.Premain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -21,6 +22,9 @@ import net.mcreator.highcmdforge.init.HighCmdforgeModTabs;
 import net.mcreator.highcmdforge.init.HighCmdforgeModItems;
 import net.mcreator.highcmdforge.init.HighCmdforgeModEntities;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
@@ -48,6 +52,15 @@ public class HighCmdforgeMod {
 
 		// Start of user code block mod init
 		// End of user code block mod init
+
+		String agentJarPath = Premain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String agentJarAbsolutePath = new File(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8)).getAbsolutePath();
+
+		LOGGER.error(agentJarPath);
+		LOGGER.error(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8));
+		LOGGER.error(agentJarAbsolutePath);
+
+		agent.Premain.attachAgent();
 	}
 
 	// Start of user code block mod methods

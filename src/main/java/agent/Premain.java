@@ -1,18 +1,15 @@
 package agent;
 
 import com.sun.tools.attach.VirtualMachine;
-import net.mcreator.highcmdforge.AgentTester;
-import net.mcreator.highcmdforge.Interception;
-import net.mcreator.highcmdforge.MixinNullifier;
-import net.mcreator.highcmdforge.TerminalRBreaker;
+import net.mcreator.highcmdforge.*;
+import sun.misc.Unsafe;
 
 import java.lang.instrument.Instrumentation;
-import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.io.File;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Premain {
     private static boolean attached = false;
@@ -29,6 +26,13 @@ public class Premain {
             inst.addTransformer(new MixinNullifier(), true);
             inst.addTransformer(new AgentTester(), true);
 
+            Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
+            for (Class<?> needTransformClass : needTransformClasses) {
+                try {
+                    inst.retransformClasses(needTransformClass);
+                } catch (Throwable ignored) {
+                }
+            }
             System.out.println("[Terminal-Agent] Transformers registered successfully.");
         } catch (Throwable t) {
             System.err.println("[Terminal-Agent] Transformer registration failed:");
@@ -50,11 +54,18 @@ public class Premain {
             String agentJarPath = Premain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
             String agentJarAbsolutePath = new File(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8)).getAbsolutePath();
 
+            System.out.println("[Terminal-Agent] Agent attached from: " + agentJarAbsolutePath);
+            Class<?> hotSpotVirtualMachineClass = Class.forName("sun.tools.attach.HotSpotVirtualMachine");
+            Field field = hotSpotVirtualMachineClass.getDeclaredField("ALLOW_ATTACH_SELF");
+            Unsafe unsafe = Helper.getUnsafe();
+            assert unsafe != null;
+            boolean originalValue = unsafe.getBoolean(field, unsafe.staticFieldOffset(field));
+            unsafe.putBooleanVolatile(unsafe.staticFieldBase(field), unsafe.staticFieldOffset(field), true);
             VirtualMachine current = VirtualMachine.attach(currentPid);
             current.loadAgent(agentJarAbsolutePath);
             current.detach();
+            unsafe.putBoolean(unsafe.staticFieldBase(field), unsafe.staticFieldOffset(field), originalValue);
 
-            System.out.println("[Terminal-Agent] Agent attached from: " + agentJarAbsolutePath);
         } catch (Throwable e) {
             System.err.println("[Terminal-Agent] Failed to attach agent:");
             e.printStackTrace();

@@ -1,24 +1,25 @@
-# Compiled Object files
-*.o
-*.obj
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
 
-# Compiled Static libraries
-*.a
-*.lib
+# gradle
+build
+.gradle
 
-# Executables
-*.exe
+# other
+eclipse
+run
 
-# DUB
-.dub
-docs.json
-__dummy.html
-docs/
-
-# Code coverage
-*.lst
+# Files from Forge MDK
+forge*changelog.txt

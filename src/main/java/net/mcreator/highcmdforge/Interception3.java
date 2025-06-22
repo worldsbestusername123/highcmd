@@ -30,7 +30,6 @@ public class Interception3 implements ITransformationService {
     @Override
     public void initialize(IEnvironment environment) {
         System.out.println("[Terminality-AI] TransformationService initialized early");
-        Premain.attachAgent();
     }
 
     @Override public void onLoad(IEnvironment environment, Set<String> otherServices) {}

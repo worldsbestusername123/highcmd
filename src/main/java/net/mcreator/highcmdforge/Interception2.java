@@ -17,13 +17,6 @@ public class Interception2 implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        try {
-            agent.Premain.attachAgent();
-            System.out.println("[Terminal-Agent] Terminality ability activated.");
-        } catch (Throwable e) {
-            System.err.println("[Terminal-Agent] Failed to attach agent:");
-            e.printStackTrace();
-        }
     }
 
     @Override
