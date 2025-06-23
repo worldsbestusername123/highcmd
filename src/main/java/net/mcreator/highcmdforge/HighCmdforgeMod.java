@@ -53,13 +53,6 @@ public class HighCmdforgeMod {
 		// Start of user code block mod init
 		// End of user code block mod init
 
-		String agentJarPath = Premain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		String agentJarAbsolutePath = new File(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8)).getAbsolutePath();
-
-		LOGGER.error(agentJarPath);
-		LOGGER.error(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8));
-		LOGGER.error(agentJarAbsolutePath);
-
 		agent.Premain.attachAgent();
 	}
 

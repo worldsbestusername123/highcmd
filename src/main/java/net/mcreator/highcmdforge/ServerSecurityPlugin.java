@@ -7,22 +7,22 @@ import org.objectweb.asm.tree.*;
 
 import java.util.*;
 
-public class Interception4 implements ILaunchPluginService {
+public class ServerSecurityPlugin implements ILaunchPluginService {
 
-    private static final Set<String> targets = Set.of(
+    private static final Set<String> PROTECTED_CLASSES = Set.of(
             "net.minecraft.server.level.ServerLevel",
             "net.minecraft.client.renderer.GameRenderer"
     );
 
     @Override
     public String name() {
-        return "terminality-launch-plugin";
+        return "high-cmd-security-plugin";
     }
 
     @Override
     public EnumSet<Phase> handlesClass(Type classType, boolean isEmpty) {
         String name = classType.getClassName();
-        return targets.contains(name) ? EnumSet.of(Phase.BEFORE) : EnumSet.noneOf(Phase.class);
+        return PROTECTED_CLASSES.contains(name) ? EnumSet.of(Phase.BEFORE) : EnumSet.noneOf(Phase.class);
     }
 
     @Override
@@ -46,13 +46,13 @@ public class Interception4 implements ILaunchPluginService {
                         inject.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         inject.add(new MethodInsnNode(
                                 Opcodes.INVOKESTATIC,
-                                "net/mcreator/highcmdforge/Interception5",
-                                "purgeEntities",
+                                "net/mcreator/highcmdforge/EntitySecurityManager",
+                                "cleanupEntities",
                                 "(Ljava/lang/Object;)V",
                                 false
                         ));
                         method.instructions.insertBefore(target, inject);
-                        System.out.println("[Terminality] Injected purgeEntities into ServerLevel.<init>");
+                        System.out.println("[Terminal-Agent] Injected entity cleanup into ServerLevel.<init>");
                     }
                 }
             }

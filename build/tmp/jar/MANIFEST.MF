@@ -5,8 +5,9 @@ Specification-Version: 1
 Implementation-Title: High-CMD
 Implementation-Version: 1.0.0
 Implementation-Vendor: YourNameHere, OtherNameHere
-Implementation-Timestamp: 2025-06-22T22:57:55+0900
-Premain-Class: "agent.Premain"
-Can-Redefine-Classes: "true"
+Implementation-Timestamp: 2025-06-23T22:58:00+0900
+Premain-Class: agent.Premain
+Agent-Class: agent.Premain
+Can-Redefine-Classes: true
 MixinConfigs: mixins.high-cmd.json
 

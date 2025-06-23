@@ -4,7 +4,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.mcreator.highcmdforge.network.HighCmdforgeModVariables;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,18 +19,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
-public abstract class ABOOLEAN5 {
-    @Shadow public abstract boolean shouldRender(double p_20296_, double p_20297_, double p_20298_);
-
-    @Shadow public abstract boolean killedEntity(ServerLevel p_216988_, LivingEntity p_216989_);
-
-    @Shadow @Final protected SynchedEntityData entityData;
-
-    @Shadow public abstract void handleEntityEvent(byte p_19882_);
-
-    @Inject(at = @At("HEAD"), method = "tick")
-    private void tick2(CallbackInfo ci) {
+@Mixin(Entity.class)
+public abstract class EntityDataSyncMixin {
+    @Shadow public abstract boolean shouldRender(double x, double y, double z);
+    
+    @Shadow protected abstract void killedEntity(ServerLevel level, LivingEntity entity);
+    
+    @Shadow protected abstract void handleEntityEvent(byte event);
+    
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void onTick(CallbackInfo ci) {
         Entity entity = (Entity) (Object) this;
         Level world = entity.level();
         if (((!(entity instanceof TerminalEntity)) && (!(entity instanceof Player)) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true)) {
@@ -69,9 +66,7 @@ public abstract class ABOOLEAN5 {
             entity.shouldRender(0, 0, 0);
             AABB boundingBox = new AABB(0, 0, 0, 0, 0, 0);
             entity.setBoundingBox(boundingBox);
-            entityData.isEmpty();
             entity.shouldRender(0,0,0);
-
         }
     }
 }

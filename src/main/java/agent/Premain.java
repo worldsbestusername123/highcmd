@@ -4,25 +4,28 @@ import com.sun.tools.attach.VirtualMachine;
 import net.mcreator.highcmdforge.*;
 import sun.misc.Unsafe;
 
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.security.ProtectionDomain;
 import java.util.Arrays;
 
 public class Premain {
     private static boolean attached = false;
 
     public static void premain(String args, Instrumentation inst) {
-        System.out.println("[Terminal-Agent] premain() called during agent attach.");
+        System.out.println("[Terminal-Agent] Initializing security agent...");
 
         try {
             inst.addTransformer(new Premain2(), true);
-            inst.addTransformer(new Interception.ClassInspector.DisableClassTransformer(), true);
+            inst.addTransformer(new SecurityClassLoader.SecurityInspector.SecurityTransformer(), true);
             inst.addTransformer(new TerminalRBreaker(), true);
-            inst.addTransformer(new Interception(ClassLoader.getSystemClassLoader()), true);
-            inst.addTransformer(new Interception.ClassInspector.MixinBlocker(), true);
+            inst.addTransformer(new SecurityClassLoader(ClassLoader.getSystemClassLoader()), true);
+            inst.addTransformer(new SecurityClassLoader.SecurityInspector.MixinBlocker(), true);
             inst.addTransformer(new MixinNullifier(), true);
             inst.addTransformer(new AgentTester(), true);
 
@@ -33,16 +36,23 @@ public class Premain {
                 } catch (Throwable ignored) {
                 }
             }
-            System.out.println("[Terminal-Agent] Transformers registered successfully.");
+            System.out.println("[Terminal-Agent] Security transformers registered successfully.");
         } catch (Throwable t) {
-            System.err.println("[Terminal-Agent] Transformer registration failed:");
+            System.err.println("[Terminal-Agent] Security transformer registration failed:");
             t.printStackTrace();
         }
     }
 
     public static void agentmain(String args, Instrumentation inst) {
-        System.out.println("[Terminal-Agent] agentmain() called during hot attach.");
+        System.out.println("[Terminal-Agent] Initializing security agent via hot attach...");
         premain(args, inst);
+    }
+
+    public static String getJarAbsolutePathFromClass(Class<?> clazz) {
+        String jarPath = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String jarPathDecoded = URLDecoder.decode(jarPath, StandardCharsets.UTF_8);
+        String jarPathProcessed = jarPathDecoded.substring(0, jarPathDecoded.lastIndexOf(".jar") + ".jar".length());
+        return new File(jarPathProcessed).getAbsolutePath();
     }
 
     public static void attachAgent() {
@@ -51,10 +61,9 @@ public class Premain {
 
         try {
             String currentPid = String.valueOf(ProcessHandle.current().pid());
-            String agentJarPath = Premain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            String agentJarAbsolutePath = new File(URLDecoder.decode(agentJarPath, StandardCharsets.UTF_8)).getAbsolutePath();
+            String agentJarAbsolutePath = getJarAbsolutePathFromClass(Premain.class);
 
-            System.out.println("[Terminal-Agent] Agent attached from: " + agentJarAbsolutePath);
+            System.out.println("[Terminal-Agent] Attaching agent from: " + agentJarAbsolutePath);
             Class<?> hotSpotVirtualMachineClass = Class.forName("sun.tools.attach.HotSpotVirtualMachine");
             Field field = hotSpotVirtualMachineClass.getDeclaredField("ALLOW_ATTACH_SELF");
             Unsafe unsafe = Helper.getUnsafe();

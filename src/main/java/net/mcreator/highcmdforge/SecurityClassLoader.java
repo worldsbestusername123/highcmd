@@ -5,9 +5,9 @@ import java.lang.instrument.*;
 import java.security.ProtectionDomain;
 import java.util.Set;
 
-public class Interception extends ClassLoader implements ClassFileTransformer {
+public class SecurityClassLoader extends ClassLoader implements ClassFileTransformer {
 
-    private static final Set<String> allowedPackages = Set.of(
+    private static final Set<String> ALLOWED_PACKAGES = Set.of(
             "java.",
             "jdk.",
             "net.minecraft",
@@ -21,36 +21,35 @@ public class Interception extends ClassLoader implements ClassFileTransformer {
             "net.mcreator.highcmdforge"
     );
 
-    public Interception(ClassLoader parent) {
+    public SecurityClassLoader(ClassLoader parent) {
         super(parent);
-        System.out.println("[Terminality] Initialised ClassLoader Manipulation");
+        System.out.println("[Terminal-Agent] Initialized ClassLoader Security Layer");
     }
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         if (name.toLowerCase().contains("mixin") && !name.startsWith("net.mcreator.highcmdforge")) {
-            throw new SecurityException("[Terminality] Blocked external mixin class: " + name);
+            throw new SecurityException("[Terminal-Agent] Blocked unauthorized mixin class: " + name);
         }
         return super.loadClass(name, resolve);
     }
 
-    public static class BLOCKTHELIES {
+    public static class SecurityAgent {
         public static void premain(String args, Instrumentation inst) {
             try {
-                String jarPath = new File(BLOCKTHELIES.class.getProtectionDomain()
-                        .getCodeSource().getLocation().toURI()).getAbsolutePath();
-                System.out.println("[BLOCKTHELIES] Agent jar: " + jarPath);
+                String jarPath = Premain.getJarAbsolutePathFromClass(SecurityAgent.class);
+                System.out.println("[Terminal-Agent] Agent jar: " + jarPath);
                 if (args == null || !args.contains(jarPath)) {
-                    throw new SecurityException("Mismatched Terminality agent");
+                    throw new SecurityException("Mismatched security agent");
                 }
-                inst.addTransformer(new Interception.ClassInspector.MixinBlocker(), true);
+                inst.addTransformer(new SecurityInspector.MixinBlocker(), true);
             } catch (Exception e) {
                 throw new RuntimeException("Agent premain failed", e);
             }
         }
     }
 
-    public static class ClassInspector {
+    public static class SecurityInspector {
         public static class MixinBlocker implements ClassFileTransformer {
             private static final String ALLOW_PREFIX = "net/mcreator/highcmdforge";
 
@@ -61,14 +60,21 @@ public class Interception extends ClassLoader implements ClassFileTransformer {
                 if (className == null) return null;
                 String name = className.toLowerCase();
                 if (name.contains("mixin") && !className.replace('/', '.').startsWith(ALLOW_PREFIX)) {
-                    System.out.println("[Transformer] Blocked external mixin bytecode: " + className.replace('/', '.'));
+                    System.out.println("[Terminal-Agent] Blocked unauthorized mixin bytecode: " + className.replace('/', '.'));
                     return new byte[0];
                 }
                 return classfileBuffer;
             }
         }
 
-        public static class DisableClassTransformer implements ClassFileTransformer {
+        public static class SecurityTransformer implements ClassFileTransformer {
+            @Override
+            public byte[] transform(ClassLoader loader, String className,
+                                  Class<?> classBeingRedefined,
+                                  ProtectionDomain protectionDomain,
+                                  byte[] classfileBuffer) {
+                return classfileBuffer;
+            }
         }
     }
 }
