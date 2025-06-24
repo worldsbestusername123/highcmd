@@ -13,8 +13,9 @@ public class AResist2 {
     @Inject(at = @At("HEAD"), method = "removePassenger", cancellable = true)
     private void removePassenger(Entity p_20352_, CallbackInfo ci) {
         Entity entity = (Entity)(Object)this;
-        if (entity instanceof TerminalEntity || entity instanceof Player) {
+        if (net.mcreator.highcmdforge.CMDProtectedEntities.isEntityDefended(entity)) {
             ci.cancel();
         }
+
     }
 }
