@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.network.chat.Component;
 
 import net.mcreator.highcmdforge.procedures.DeathTerminalEntitySwingsItemProcedure;
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 
 import java.util.List;
 
@@ -50,6 +51,12 @@ public class DeathTerminalItem extends SwordItem {
 		list.add(Component.literal("\u00A74 Terminal."));
 	}
 
+	@Override
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+		if (entity instanceof Player player && !CMDProtectedEntities.protectedPlayers.contains(player.getGameProfile().getId()))
+			CMDProtectedEntities.protectedPlayers.add(player.getGameProfile().getId());
+	}
+	
 	@Override
 	public boolean onEntitySwing(ItemStack itemstack, LivingEntity entity) {
 		boolean retval = super.onEntitySwing(itemstack, entity);
