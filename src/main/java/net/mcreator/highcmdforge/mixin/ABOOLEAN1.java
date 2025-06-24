@@ -12,14 +12,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 
 @Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
 public class ABOOLEAN1 {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)
     private void shouldRender(double p_20296_, double p_20297_, double p_20298_, CallbackInfoReturnable<Boolean> cir) {
         Entity entity = (Entity)(Object)this;
-        Level world = entity.level();
-        if (!(entity instanceof TerminalEntity) && (!(entity instanceof Player)) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true) {
+
+        if (!CMDProtectedEntities.isEntityDefended(entity)) {
             cir.setReturnValue(false);
             cir.cancel();
         }
