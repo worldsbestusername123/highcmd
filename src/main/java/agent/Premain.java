@@ -4,14 +4,11 @@ import com.sun.tools.attach.VirtualMachine;
 import net.mcreator.highcmdforge.*;
 import sun.misc.Unsafe;
 
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.security.ProtectionDomain;
 import java.util.Arrays;
 
 public class Premain {
