@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 
 @Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
 public class ABOOLEAN3 {
