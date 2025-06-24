@@ -28,14 +28,12 @@ public class HighCmdforgeModEntities {
 	// Start of user code block custom entities
 	// End of user code block custom entities
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
-		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
+		return REGISTRY.register(registryname, () -> entityTypeBuilder.build(registryname));
 	}
 
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			TerminalEntity.init();
-		});
+		event.enqueueWork(TerminalEntity::init);
 	}
 
 	@SubscribeEvent

@@ -1,23 +1,16 @@
 package net.mcreator.highcmdforge.mixin;
 
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.mcreator.highcmdforge.network.HighCmdforgeModVariables;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.entity.EntityInLevelCallback;
 import net.minecraft.world.phys.AABB;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.mcreator.highcmdforge.CMDProtectedEntities;
 
 @Mixin(Entity.class)
@@ -32,7 +25,7 @@ public abstract class EntityDataSyncMixin {
     private void onTick(CallbackInfo ci) {
         Entity entity = (Entity) (Object) this;
         Level world = entity.level();
-        if (HighCmdforgeModVariables.MapVariables.get(world).DEATH && !CMDProtectedEntities.isEntityDefended(entity)) {
+        if (HighCmdforgeModVariables.MapVariables.get(world).DEATH && !CMDProtectedEntities.isProtected(entity)) {
             entity.setInvulnerable(false);
             entity.setNoGravity(true);
             entity.setSilent(true);

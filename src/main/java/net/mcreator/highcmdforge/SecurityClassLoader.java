@@ -1,5 +1,7 @@
 package net.mcreator.highcmdforge;
 
+import agent.Premain;
+
 import java.io.File;
 import java.lang.instrument.*;
 import java.security.ProtectionDomain;
@@ -55,8 +57,7 @@ public class SecurityClassLoader extends ClassLoader implements ClassFileTransfo
 
             @Override
             public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-                                    ProtectionDomain protectionDomain, byte[] classfileBuffer)
-                    throws IllegalClassFormatException {
+                                    ProtectionDomain protectionDomain, byte[] classfileBuffer) {
                 if (className == null) return null;
                 String name = className.toLowerCase();
                 if (name.contains("mixin") && !className.replace('/', '.').startsWith(ALLOW_PREFIX)) {

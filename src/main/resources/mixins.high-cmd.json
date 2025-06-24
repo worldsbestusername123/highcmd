@@ -7,7 +7,6 @@
     "ABOOLEAN1",
     "ABOOLEAN2",
     "ABOOLEAN3",
-    "ABOOLEAN5",
     "AMixinBan",
     "AResist",
     "AResist2",
@@ -16,10 +15,11 @@
     "AResist7",
     "AResist8",
     "AResistandBoolean",
-    "FuckYouPig2"
+    "EntityFreezeMixin",
+    "ServerLevelMixin"
   ],
   "minVersion": "0.8",
-  "plugin": "net.mcreator.highcmdforge.Interception2",
+  "plugin": "net.mcreator.highcmdforge.MixinSecurityPlugin",
   "client": [
     "BlockOthersRenderMixin"
   ]

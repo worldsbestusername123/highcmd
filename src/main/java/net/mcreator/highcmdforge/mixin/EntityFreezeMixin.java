@@ -10,7 +10,6 @@ import static org.apache.commons.lang3.StringUtils.startsWith;
 
 @Mixin(LivingEntity.class)
 public abstract class EntityFreezeMixin {
-
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void freezeOthers(CallbackInfo ci) {
         Object self = this;

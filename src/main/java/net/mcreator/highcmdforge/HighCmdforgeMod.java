@@ -1,6 +1,7 @@
 package net.mcreator.highcmdforge;
 
 import agent.Premain;
+import net.minecraft.server.level.ServerLevel;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -25,14 +26,11 @@ import net.mcreator.highcmdforge.init.HighCmdforgeModEntities;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.List;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.AbstractMap;
 
 @Mod("high_cmdforge")
 public class HighCmdforgeMod {
@@ -49,11 +47,12 @@ public class HighCmdforgeMod {
 		HighCmdforgeModEntities.REGISTRY.register(bus);
 
 		HighCmdforgeModTabs.REGISTRY.register(bus);
+		MinecraftForge.EVENT_BUS.addListener(this::tick);
 
 		// Start of user code block mod init
 		// End of user code block mod init
 
-		agent.Premain.attachAgent();
+//		agent.Premain.attachAgent();
 	}
 
 	// Start of user code block mod methods
@@ -85,6 +84,8 @@ public class HighCmdforgeMod {
 			});
 			actions.forEach(e -> e.getKey().run());
 			workQueue.removeAll(actions);
+
+			event.getServer().getAllLevels().forEach(Utils::tickCheck);
 		}
 	}
 }

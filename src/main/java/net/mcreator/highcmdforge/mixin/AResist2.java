@@ -1,8 +1,6 @@
 package net.mcreator.highcmdforge.mixin;
 
-import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,7 +11,7 @@ public class AResist2 {
     @Inject(at = @At("HEAD"), method = "removePassenger", cancellable = true)
     private void removePassenger(Entity p_20352_, CallbackInfo ci) {
         Entity entity = (Entity)(Object)this;
-        if (net.mcreator.highcmdforge.CMDProtectedEntities.isEntityDefended(entity)) {
+        if (net.mcreator.highcmdforge.CMDProtectedEntities.isProtected(entity)) {
             ci.cancel();
         }
 

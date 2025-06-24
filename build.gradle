@@ -179,7 +179,7 @@ tasks.named('processResources', ProcessResources).configure {
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
             premain_class: premain_class, can_redefine_classes: can_redefine_classes,
-            agent_class: agent_class
+            agent_class: agent_class, can_retransform_classes: can_retransform_classes
     ]
     inputs.properties replaceProperties
 
@@ -202,6 +202,7 @@ tasks.named('jar', Jar).configure {
                 'Premain-Class'           : premain_class,
                 'Agent-Class'             : agent_class,
                 'Can-Redefine-Classes'    : can_redefine_classes,
+                'Can-Retransform-Classes' : can_retransform_classes,
         ])
     }
 

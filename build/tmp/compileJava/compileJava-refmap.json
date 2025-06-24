@@ -12,6 +12,12 @@
       "remove": "Lnet/minecraft/world/entity/Entity;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
       "setInvisible": "Lnet/minecraft/world/entity/Entity;m_6842_(Z)V"
     },
+    "net/mcreator/highcmdforge/mixin/EntityDataSyncMixin": {
+      "tick": "Lnet/minecraft/world/entity/Entity;m_8119_()V"
+    },
+    "net/mcreator/highcmdforge/mixin/EntityFreezeMixin": {
+      "tick": "Lnet/minecraft/world/entity/LivingEntity;m_8119_()V"
+    },
     "net/mcreator/highcmdforge/mixin/AResist7": {
       "killedEntity": "Lnet/minecraft/world/entity/Entity;m_214076_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)Z",
       "ejectPassengers": "Lnet/minecraft/world/entity/Entity;m_20153_()V",
@@ -20,9 +26,6 @@
       "moveTo(DDD)V": "Lnet/minecraft/world/entity/Entity;m_6027_(DDD)V",
       "kill": "Lnet/minecraft/world/entity/Entity;m_6074_()V",
       "remove": "Lnet/minecraft/world/entity/Entity;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
-    },
-    "net/mcreator/highcmdforge/mixin/ABOOLEAN5": {
-      "tick": "Lnet/minecraft/world/entity/Entity;m_8119_()V"
     },
     "net/mcreator/highcmdforge/mixin/AResist4": {
       "shouldRender": "Lnet/minecraft/world/entity/Entity;m_6000_(DDD)Z"
@@ -41,14 +44,15 @@
     "net/mcreator/highcmdforge/mixin/AResist2": {
       "removePassenger": "Lnet/minecraft/world/entity/Entity;m_20351_(Lnet/minecraft/world/entity/Entity;)V"
     },
+    "net/mcreator/highcmdforge/mixin/ServerLevelMixin": {
+      "Lnet/minecraft/util/profiling/ProfilerFiller;pop()V": "Lnet/minecraft/util/profiling/ProfilerFiller;m_7238_()V",
+      "tick": "Lnet/minecraft/server/level/ServerLevel;m_8793_(Ljava/util/function/BooleanSupplier;)V"
+    },
     "net/mcreator/highcmdforge/mixin/AResist": {
       "setRemoved": "Lnet/minecraft/world/entity/Entity;m_142467_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
     },
     "net/mcreator/highcmdforge/mixin/BlockOthersRenderMixin": {
       "render*": "Lnet/minecraft/client/renderer/entity/MobRenderer;m_7392_(Lnet/minecraft/world/entity/Mob;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
-    },
-    "net/mcreator/highcmdforge/mixin/FuckYouPig2": {
-      "tick": "Lnet/minecraft/world/entity/LivingEntity;m_8119_()V"
     },
     "net/mcreator/highcmdforge/mixin/AMixinBan": {
       "addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/server/level/ServerLevel;m_7967_(Lnet/minecraft/world/entity/Entity;)Z"
@@ -71,6 +75,12 @@
         "remove": "Lnet/minecraft/world/entity/Entity;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
         "setInvisible": "Lnet/minecraft/world/entity/Entity;m_6842_(Z)V"
       },
+      "net/mcreator/highcmdforge/mixin/EntityDataSyncMixin": {
+        "tick": "Lnet/minecraft/world/entity/Entity;m_8119_()V"
+      },
+      "net/mcreator/highcmdforge/mixin/EntityFreezeMixin": {
+        "tick": "Lnet/minecraft/world/entity/LivingEntity;m_8119_()V"
+      },
       "net/mcreator/highcmdforge/mixin/AResist7": {
         "killedEntity": "Lnet/minecraft/world/entity/Entity;m_214076_(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)Z",
         "ejectPassengers": "Lnet/minecraft/world/entity/Entity;m_20153_()V",
@@ -79,9 +89,6 @@
         "moveTo(DDD)V": "Lnet/minecraft/world/entity/Entity;m_6027_(DDD)V",
         "kill": "Lnet/minecraft/world/entity/Entity;m_6074_()V",
         "remove": "Lnet/minecraft/world/entity/Entity;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
-      },
-      "net/mcreator/highcmdforge/mixin/ABOOLEAN5": {
-        "tick": "Lnet/minecraft/world/entity/Entity;m_8119_()V"
       },
       "net/mcreator/highcmdforge/mixin/AResist4": {
         "shouldRender": "Lnet/minecraft/world/entity/Entity;m_6000_(DDD)Z"
@@ -100,14 +107,15 @@
       "net/mcreator/highcmdforge/mixin/AResist2": {
         "removePassenger": "Lnet/minecraft/world/entity/Entity;m_20351_(Lnet/minecraft/world/entity/Entity;)V"
       },
+      "net/mcreator/highcmdforge/mixin/ServerLevelMixin": {
+        "Lnet/minecraft/util/profiling/ProfilerFiller;pop()V": "Lnet/minecraft/util/profiling/ProfilerFiller;m_7238_()V",
+        "tick": "Lnet/minecraft/server/level/ServerLevel;m_8793_(Ljava/util/function/BooleanSupplier;)V"
+      },
       "net/mcreator/highcmdforge/mixin/AResist": {
         "setRemoved": "Lnet/minecraft/world/entity/Entity;m_142467_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
       },
       "net/mcreator/highcmdforge/mixin/BlockOthersRenderMixin": {
         "render*": "Lnet/minecraft/client/renderer/entity/MobRenderer;m_7392_(Lnet/minecraft/world/entity/Mob;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
-      },
-      "net/mcreator/highcmdforge/mixin/FuckYouPig2": {
-        "tick": "Lnet/minecraft/world/entity/LivingEntity;m_8119_()V"
       },
       "net/mcreator/highcmdforge/mixin/AMixinBan": {
         "addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/server/level/ServerLevel;m_7967_(Lnet/minecraft/world/entity/Entity;)Z"

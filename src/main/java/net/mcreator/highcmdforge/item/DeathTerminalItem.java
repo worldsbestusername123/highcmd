@@ -1,6 +1,7 @@
 
 package net.mcreator.highcmdforge.item;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.TooltipFlag;
@@ -13,6 +14,7 @@ import net.minecraft.network.chat.Component;
 
 import net.mcreator.highcmdforge.procedures.DeathTerminalEntitySwingsItemProcedure;
 import net.mcreator.highcmdforge.CMDProtectedEntities;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -39,28 +41,27 @@ public class DeathTerminalItem extends SwordItem {
 				return Integer.MAX_VALUE;
 			}
 
-			public Ingredient getRepairIngredient() {
+			public @NotNull Ingredient getRepairIngredient() {
 				return Ingredient.of();
 			}
 		}, 3, -3f, new Item.Properties().fireResistant());
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(@NotNull ItemStack itemstack, Level level, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
 		super.appendHoverText(itemstack, level, list, flag);
-		list.add(Component.literal("\u00A74 Terminal."));
+		list.add(Component.literal("§4 Terminal."));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-		if (entity instanceof Player player && !CMDProtectedEntities.protectedPlayers.contains(player.getGameProfile().getId()))
-			CMDProtectedEntities.protectedPlayers.add(player.getGameProfile().getId());
+	public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
+		CMDProtectedEntities.setProtected(pEntity);
 	}
 	
 	@Override
 	public boolean onEntitySwing(ItemStack itemstack, LivingEntity entity) {
-		boolean retval = super.onEntitySwing(itemstack, entity);
+		boolean originalValue = super.onEntitySwing(itemstack, entity);
 		DeathTerminalEntitySwingsItemProcedure.execute(entity.level(), entity.getX(), entity.getY(), entity.getZ(), entity);
-		return retval;
+		return originalValue;
 	}
 }
