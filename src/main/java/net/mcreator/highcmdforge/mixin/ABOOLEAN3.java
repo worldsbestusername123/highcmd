@@ -16,8 +16,8 @@ public class ABOOLEAN3 {
     @Inject(at = @At("HEAD"), method = "isAlive", cancellable = true)
     private void isAlive(CallbackInfoReturnable<Boolean> cir) {
         Entity entity = (Entity)(Object)this;
-        Level world = entity.level();
-        if ((entity instanceof TerminalEntity) || ((entity instanceof Player) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true)) {
+
+        if (CMDProtectedEntities.isEntityDefended(entity)) {
             cir.setReturnValue(true);
             cir.cancel();
         }
