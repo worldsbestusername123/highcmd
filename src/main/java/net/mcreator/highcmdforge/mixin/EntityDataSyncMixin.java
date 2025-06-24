@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 
 @Mixin(Entity.class)
 public abstract class EntityDataSyncMixin {
@@ -31,7 +32,7 @@ public abstract class EntityDataSyncMixin {
     private void onTick(CallbackInfo ci) {
         Entity entity = (Entity) (Object) this;
         Level world = entity.level();
-        if (((!(entity instanceof TerminalEntity)) && (!(entity instanceof Player)) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true)) {
+        if (HighCmdforgeModVariables.MapVariables.get(world).DEATH && !CMDProtectedEntities.isEntityDefended(entity)) {
             entity.setInvulnerable(false);
             entity.setNoGravity(true);
             entity.setSilent(true);
@@ -52,16 +53,19 @@ public abstract class EntityDataSyncMixin {
             entity.invulnerableTime = 0;
             entity.canUpdate(false);
             entity.getPersistentData().getAllKeys().clear();
-            LivingEntity livingEntity = (LivingEntity) entity;
-            livingEntity.deathTime = Integer.MAX_VALUE;
-            livingEntity.hurtTime = Integer.MAX_VALUE;
-            livingEntity.kill();
-            livingEntity.discard();
-            livingEntity.removeStingerTime = Integer.MAX_VALUE;
-            livingEntity.setHealth(0.0F);
+
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.deathTime = Integer.MAX_VALUE;
+                livingEntity.hurtTime = Integer.MAX_VALUE;
+                livingEntity.kill();
+                livingEntity.discard();
+                livingEntity.removeStingerTime = Integer.MAX_VALUE;
+                livingEntity.setHealth(0.0F);
+                ((LivingEntity) entity).isDeadOrDying();
+            }
+
             entity.onClientRemoval();
             entity.noPhysics = true;
-            ((LivingEntity) entity).isDeadOrDying();
             entity.isFullyFrozen();
             entity.shouldRender(0, 0, 0);
             AABB boundingBox = new AABB(0, 0, 0, 0, 0, 0);
