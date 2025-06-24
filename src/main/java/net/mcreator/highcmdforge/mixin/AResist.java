@@ -15,7 +15,7 @@ public class AResist {
     private void setRemoved(Entity.RemovalReason p_146876_, CallbackInfo ci) {
         Entity entity = (Entity)(Object)this;
         Entity entityiterator = (Entity)(Object)this;
-        if (entityiterator instanceof TerminalEntity || entity instanceof net.mcreator.highcmdforge.entity.TerminalEntity) {
+        if (net.mcreator.highcmdforge.CMDProtectedEntities.isEntityDefended(entityiterator)) {
             ci.cancel();
         }
         else {
