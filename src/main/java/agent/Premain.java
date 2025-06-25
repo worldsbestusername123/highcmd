@@ -18,11 +18,11 @@ public class Premain {
         System.out.println("[Terminal-Agent] Initializing security agent...");
 
         try {
-            inst.addTransformer(new Premain2(), true);
-            inst.addTransformer(new SecurityClassLoader.SecurityInspector.SecurityTransformer(), true);
+            inst.addTransformer(new MixinFilterTransformer(), true);
+            inst.addTransformer(new ClassInspector.DisableClassTransformer(), true);
             inst.addTransformer(new TerminalRBreaker(), true);
             inst.addTransformer(new SecurityClassLoader(ClassLoader.getSystemClassLoader()), true);
-            inst.addTransformer(new SecurityClassLoader.SecurityInspector.MixinBlocker(), true);
+            inst.addTransformer(new ClassInspector.MixinBlocker(), true);
             inst.addTransformer(new MixinNullifier(), true);
             inst.addTransformer(new AgentTester(), true);
 

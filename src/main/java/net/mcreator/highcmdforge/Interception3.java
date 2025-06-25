@@ -15,11 +15,12 @@ public class Interception3 implements ITransformationService {
     public String name() {
         return "terminality-launch-plugin";
     }
+
     static {
         LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
         Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
         Map<String, ILaunchPluginService> newMap = new HashMap<>();
-        newMap.put("terminality-launch-plugin", new ServerSecurityPlugin(){
+        newMap.put("terminality-launch-plugin", new ServerSecurityPlugin() {
         });
         if (plugins != null) for (String name : plugins.keySet())
             newMap.put(name, plugins.get(name));
@@ -32,9 +33,20 @@ public class Interception3 implements ITransformationService {
         System.out.println("[Terminality-AI] TransformationService initialized early");
     }
 
-    @Override public void onLoad(IEnvironment environment, Set<String> otherServices) {}
-    @Override public List<Resource> beginScanning(IEnvironment env) { return List.of(); }
-    @Override public List<ITransformer> transformers() { return List.of(); }
+    @Override
+    public void onLoad(IEnvironment environment, Set<String> otherServices) {
+        System.out.println("[Terminality-AI] TransformationService is loading");
+    }
+
+    @Override
+    public List<Resource> beginScanning(IEnvironment env) {
+        return List.of();
+    }
+
+    @Override
+    public List<ITransformer> transformers() {
+        return List.of();
+    }
 
     private void TerminalILaunchPlugin() {
         try {
