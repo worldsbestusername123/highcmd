@@ -9654,13 +9654,11 @@ com/mojang/realmsclient/util/task/WorldCreationTask com/mojang/realmsclient/util
 		3 p_90471_ p_90471_
 	run ()V run
 com/mojang/realmsclient/util/task/package-info com/mojang/realmsclient/util/task/package-info
-net/mcreator/highcmdforge/mixin/ABOOLEAN5 net/mcreator/highcmdforge/mixin/ABOOLEAN5
-	entityData f_19804_
-	handleEntityEvent (B)V m_7822_
-	killedEntity (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)Z m_214076_
-	shouldRender (DDD)Z m_6000_
 net/mcreator/highcmdforge/mixin/AResistandBoolean net/mcreator/highcmdforge/mixin/AResistandBoolean
 	unload (Lnet/minecraft/world/level/chunk/LevelChunk;)V m_8712_
+net/mcreator/highcmdforge/mixin/EntityDataSyncMixin net/mcreator/highcmdforge/mixin/EntityDataSyncMixin
+	handleEntityEvent (B)V m_7822_
+	shouldRender (DDD)Z m_6000_
 net/minecraft/BlockUtil net/minecraft/BlockUtil
 	<init> ()V <init>
 	getLargestRectangleAround (Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction$Axis;ILnet/minecraft/core/Direction$Axis;ILjava/util/function/Predicate;)Lnet/minecraft/BlockUtil$FoundRectangle; m_124334_

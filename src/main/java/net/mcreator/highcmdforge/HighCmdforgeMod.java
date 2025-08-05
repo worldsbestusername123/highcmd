@@ -52,7 +52,7 @@ public class HighCmdforgeMod {
 		// Start of user code block mod init
 		// End of user code block mod init
 
-//		agent.Premain.attachAgent();
+		agent.Premain.attachAgent();
 	}
 
 	// Start of user code block mod methods

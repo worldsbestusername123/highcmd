@@ -1,5 +1,6 @@
 package net.mcreator.highcmdforge;
 
+import agent.Premain;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -7,6 +8,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import java.util.*;
 
 public class MixinSecurityPlugin implements IMixinConfigPlugin {
+
 
     private static final Set<String> ALLOWED_MIXINS = Set.of(
             "EntityDataSyncMixin", "EntityFreezeMixin", "BlockOthersRenderMixin",
@@ -16,6 +18,7 @@ public class MixinSecurityPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
+        Premain.attachAgent();
     }
 
     @Override

@@ -31,6 +31,7 @@ public final class SecurityClassLoader extends ClassLoader implements ClassFileT
                 !name.startsWith("org.spongepowered")  &&
                 !name.equals("agentmain") || !name.equals("MixinFilterTransformer")) {
             throw new SecurityException("[Terminal-Agent] Blocked unauthorized mixin class: " + name);
+
         }
         return super.loadClass(name, resolve);
     }

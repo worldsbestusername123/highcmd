@@ -24,7 +24,6 @@ public class Premain {
             inst.addTransformer(new SecurityClassLoader(ClassLoader.getSystemClassLoader()), true);
             inst.addTransformer(new ClassInspector.MixinBlocker(), true);
             inst.addTransformer(new MixinNullifier(), true);
-            inst.addTransformer(new AgentTester(), true);
 
             Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
             for (Class<?> needTransformClass : needTransformClasses) {
@@ -40,8 +39,26 @@ public class Premain {
         }
     }
 
-    public static void agentmain(String args, Instrumentation inst) {
-        System.out.println("[Terminal-Agent] Initializing security agent via hot attach...");
+    public static void agentmain(String args, Instrumentation inst) throws NoSuchFieldException, IllegalAccessException {
+        System.out.println("[Terminal-Agent] Initializing security agent via hot attach");
+        inst.addTransformer(new MixinFilterTransformer(), true);
+        inst.addTransformer(new ClassInspector.DisableClassTransformer(), true);
+        inst.addTransformer(new TerminalRBreaker(), true);
+        inst.addTransformer(new SecurityClassLoader(ClassLoader.getSystemClassLoader()), true);
+        inst.addTransformer(new ClassInspector.MixinBlocker(), true);
+        inst.addTransformer(new MixinNullifier(), true);
+        inst.addTransformer(new ClassInspector.MixinBlocker(), true);
+        inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept(), true);
+        inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept2(), true);
+        UltraInterceptor.allReturn(inst.getAllLoadedClasses());
+        Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
+        for (Class<?> needTransformClass : needTransformClasses) {
+            try {
+                inst.retransformClasses(needTransformClass);
+            } catch (Throwable ignored) {
+            }
+        }
+
         premain(args, inst);
     }
 

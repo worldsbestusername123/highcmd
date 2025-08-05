@@ -2,6 +2,7 @@ package net.mcreator.highcmdforge;
 
 import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

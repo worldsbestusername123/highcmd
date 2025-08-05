@@ -26,6 +26,7 @@ public class CMDSwordEntitySwingsItemProcedure {
 						world.getServer().getPlayerList().broadcastSystemMessage(Component.literal("Task completed in 1 tick!"), false);
 					if (entityiterator instanceof LivingEntity _entity)
 						_entity.setHealth(0);
+
 				}
 			}
 		}

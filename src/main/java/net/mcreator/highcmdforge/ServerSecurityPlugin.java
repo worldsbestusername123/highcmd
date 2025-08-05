@@ -24,7 +24,6 @@ public class ServerSecurityPlugin implements ILaunchPluginService {
         String name = classType.getClassName();
         return PROTECTED_CLASSES.contains(name) ? EnumSet.of(Phase.BEFORE) : EnumSet.noneOf(Phase.class);
     }
-
     @Override
     public boolean processClass(Phase phase, ClassNode classNode, Type classType, String reason) {
         String fullName = classType.getClassName();
@@ -74,7 +73,7 @@ public class ServerSecurityPlugin implements ILaunchPluginService {
                 }
             }
         }
-
         return false;
+
     }
 }
