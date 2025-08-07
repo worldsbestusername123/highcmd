@@ -1,5 +1,6 @@
 package net.mcreator.highcmdforge.mixin;
 
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.mcreator.highcmdforge.network.HighCmdforgeModVariables;
@@ -20,14 +21,9 @@ public class AMixinBan {
 		ServerLevel level = (ServerLevel) (Object) this;
 
 		if (HighCmdforgeModVariables.MapVariables.get(level) != null && HighCmdforgeModVariables.MapVariables.get(level).DEATH == true) {
-			if (!(entity instanceof Player)) {
-				if (!(entity instanceof net.mcreator.highcmdforge.entity.TerminalEntity)) {
-					cir.setReturnValue(false);
-					cir.cancel();
-				}
-				else {
-
-				}
+			if (!(CMDProtectedEntities.isProtected(entity))) {
+				cir.setReturnValue(false);
+				cir.cancel();
 			}
 		}
 	}

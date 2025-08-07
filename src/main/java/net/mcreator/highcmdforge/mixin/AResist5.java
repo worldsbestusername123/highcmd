@@ -28,7 +28,7 @@ public class AResist5 {
     }
 
 
-    @Inject(method = {"save"}, at = {@At("HEAD")}, cancellable = true)
+    @Inject(method = {"save"}, at = {@At("TAIL")}, cancellable = true)
     public void save(CompoundTag p_20224_, CallbackInfoReturnable<Boolean> cir) {
         Entity entity = (Entity) (Object) this;
         if (((entity instanceof TerminalEntity)) || ((entity instanceof Player))) {

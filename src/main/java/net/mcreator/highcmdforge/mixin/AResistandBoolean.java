@@ -1,5 +1,6 @@
 package net.mcreator.highcmdforge.mixin;
 
+import net.mcreator.highcmdforge.CMDProtectedEntities;
 import net.mcreator.highcmdforge.entity.TerminalEntity;
 import net.mcreator.highcmdforge.network.HighCmdforgeModVariables;
 import net.minecraft.server.level.ServerLevel;
@@ -16,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class AResistandBoolean {
     @Shadow public abstract void unload(LevelChunk p_8713_);
     ServerLevel world = (ServerLevel)(Object)this;
-    @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "addEntity", at = @At("TAIL"), cancellable = true)
     private void addentity(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (((entity instanceof Player || entity instanceof TerminalEntity)) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true) {
+        if (CMDProtectedEntities.isProtected(entity) && HighCmdforgeModVariables.MapVariables.get(world).DEATH == true) {
             cir.setReturnValue(true);
         }
     }
