@@ -5,11 +5,39 @@ import cpw.mods.modlauncher.LaunchPluginHandler;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.*;
 import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
+import net.minecraft.client.Minecraft;
 
+import java.io.File;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
 public class Interception3 implements ITransformationService {
+
+    static {
+        System.out.println("[Terminality-AI] Static block begin.");
+
+        // check if we haven't already relaunched the game
+        if (!Objects.equals(System.getProperty("cmd.hasRelaunched"), "true")) {
+            try {
+                // THX https://codingtechroom.com/question/-java-run-jar-from-another-jar-with-passing-arguments
+                URI minecraftLocation = Minecraft.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+
+                // build a process and run the new game with our agent, of course
+                ProcessBuilder processBuilder = new ProcessBuilder("java", "-javaagent:" + Premain.getJarAbsolutePathFromClass(Premain.class), "-Dcmd.hasRelaunched=\"true\"", "-jar", new File(minecraftLocation).getPath());
+                processBuilder.start();
+
+                System.out.println("[Terminality-AI] Relaunch completed.");
+                System.exit(-1);
+            } catch (Throwable t) {
+                // gob would've thrown a tantrum and crashed the game here, but not terminality, terminality is chill
+                System.err.println("[Terminality-AI] ERROR. ERROR. ERROR.");
+                throw new RuntimeException(t);
+            }
+        }
+    }
 
     @Override
     public String name() {

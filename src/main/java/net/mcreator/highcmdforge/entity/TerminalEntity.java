@@ -1,6 +1,7 @@
 
 package net.mcreator.highcmdforge.entity;
 
+import net.mcreator.highcmdforge.Helper;
 import net.mcreator.highcmdforge.TerminalEntityLevelRenderer;
 import net.mcreator.highcmdforge.Utils;
 import net.minecraft.client.Minecraft;
@@ -32,6 +33,8 @@ import net.minecraft.network.protocol.Packet;
 import net.mcreator.highcmdforge.init.HighCmdforgeModEntities;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static io.netty.util.internal.shaded.org.jctools.util.UnsafeAccess.UNSAFE;
 
 public final class TerminalEntity extends Monster {
@@ -50,7 +53,7 @@ public final class TerminalEntity extends Monster {
         if (world.isClientSide) {
             try {
                 TerminalEntityLevelRenderer worldrender = new TerminalEntityLevelRenderer(Minecraft.getInstance(), Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers());
-                UNSAFE.putObject(Minecraft.getInstance(), UNSAFE.objectFieldOffset(Minecraft.class.getDeclaredField("levelRenderer")), worldrender);
+                Objects.requireNonNull(Helper.getUnsafe()).putObject(Minecraft.getInstance(), Helper.getUnsafe().objectFieldOffset(Minecraft.class.getDeclaredField("levelRenderer")), worldrender);
                 if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager man)
                     man.registerReloadListener(worldrender);
             } catch (Throwable t) {
