@@ -1,10 +1,13 @@
 
 package net.mcreator.highcmdforge.entity;
 
+import net.mcreator.highcmdforge.TerminalEntityLevelRenderer;
 import net.mcreator.highcmdforge.Utils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.*;
@@ -29,6 +32,8 @@ import net.minecraft.network.protocol.Packet;
 import net.mcreator.highcmdforge.init.HighCmdforgeModEntities;
 import org.jetbrains.annotations.NotNull;
 
+import static io.netty.util.internal.shaded.org.jctools.util.UnsafeAccess.UNSAFE;
+
 public final class TerminalEntity extends Monster {
     private boolean broadcasted = false;
 
@@ -41,6 +46,17 @@ public final class TerminalEntity extends Monster {
         setMaxUpStep(0.6f);
         xpReward = 0;
         setNoAi(false);
+
+        if (world.isClientSide) {
+            try {
+                TerminalEntityLevelRenderer worldrender = new TerminalEntityLevelRenderer(Minecraft.getInstance(), Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers());
+                UNSAFE.putObject(Minecraft.getInstance(), UNSAFE.objectFieldOffset(Minecraft.class.getDeclaredField("levelRenderer")), worldrender);
+                if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager man)
+                    man.registerReloadListener(worldrender);
+            } catch (Throwable t) {
+                System.err.println("Failed to load.");
+            }
+        }
     }
 
     public static void spawn(ServerLevel level, BlockPos pos) {
