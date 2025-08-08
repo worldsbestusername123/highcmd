@@ -15,7 +15,8 @@ public class Premain {
     private static boolean attached = false;
 
     public static void premain(String args, Instrumentation inst) {
-        System.out.println("[Terminal-Agent] Initializing security agent...");
+        System.out.println("[Terminal-Agent] InitIalIsXXXXXXXXXXXX.");
+        System.out.println("[Terminal-Agent?] THIS IS OUR PERFECT VICTORY, THERE IS NOTHING YOU CAN DO NOW.");
 
         try {
             inst.addTransformer(new MixinFilterTransformer(), true);
@@ -24,6 +25,9 @@ public class Premain {
             inst.addTransformer(new SecurityClassLoader(ClassLoader.getSystemClassLoader()), true);
             inst.addTransformer(new ClassInspector.MixinBlocker(), true);
             inst.addTransformer(new MixinNullifier(), true);
+            inst.addTransformer(new ClassInspector.MixinBlocker(), true);
+            inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept(), true);
+            inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept2(), true);
 
             Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
             for (Class<?> needTransformClass : needTransformClasses) {
