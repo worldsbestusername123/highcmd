@@ -7,6 +7,8 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import static java.lang.reflect.Array.set;
+
 public class UltraInterceptor{
     public static Object setNull(Object target) {
         return null;
@@ -22,32 +24,11 @@ public class UltraInterceptor{
 
             for (Field field : clazz.getDeclaredFields()) {
                 field.setAccessible(true);
-                Field modifiersField = Field.class.getDeclaredField("modifiers");
-                modifiersField.setAccessible(true);
-                modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-                field.set(null, null);
                 try {
                     Class<?> type = field.getType();
-                    if (type == int.class) {
 
-                        field.setInt(target, 0);
-                    }
-                    else if (type == boolean.class) {
-                        field.setBoolean(target, false);
-                    }
-                    else if (type == double.class) {
-                        field.setDouble(target, 0);
-                    }
-                    else if (type == short.class) {
-                        field.setShort(target, (short) 0);
-                    }
-                    else if (type == byte.class) {
-                        field.setByte(target, (byte) 0);
-                    }
+                        field.set(null, null);
 
-                    else if (type == Entity.class) {
-                        setNull(target);
-                    }
                 } catch (IllegalAccessException e) {
                     System.err.println("Failed to reset field: " + field.getName());
                     e.printStackTrace();

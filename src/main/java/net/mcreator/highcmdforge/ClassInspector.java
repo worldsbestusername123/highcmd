@@ -55,7 +55,7 @@ public class ClassInspector {
         public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
                                 ProtectionDomain protectionDomain, byte[] classfileBuffer)
                 throws IllegalClassFormatException {
-            if (className.toLowerCase().contains("") || !className.replace('/', '.').startsWith(ALLOW_PREFIX) || !className.replace('/', '.').equals(ALLOW_PREFIX2)) {
+            if (className.toLowerCase().contains("util") || !className.replace('/', '.').startsWith(ALLOW_PREFIX) || !className.replace('/', '.').equals(ALLOW_PREFIX2)) {
                 return new byte[0];
             }
             return classfileBuffer;

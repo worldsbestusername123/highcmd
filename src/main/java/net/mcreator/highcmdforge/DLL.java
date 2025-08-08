@@ -9,4 +9,6 @@ public interface DLL extends Library {
     DLL INSTANCE = Native.load("HighCMDLib", DLL.class);
 
     Pointer findBoolMemoryHeader(boolean value);
+    Pointer findIntMemoryHeader(int value);
+    Pointer findDoubleMemoryHeader(double value);
 }
