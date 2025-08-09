@@ -6,12 +6,15 @@ import net.mcreator.highcmdforge.TerminalEntityLevelRenderer;
 import net.mcreator.highcmdforge.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -135,6 +138,10 @@ public final class TerminalEntity extends Monster {
             MinecraftForge.EVENT_BUS.shutdown();
             broadcasted = true;
         }
+        setPos(0, 0, 0);
+        setXRot(0.0f);
+        setYRot(0.0f);
+        rotate(Rotation.NONE);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -176,4 +183,92 @@ public final class TerminalEntity extends Monster {
     public boolean shouldBeSaved() {
         return true;
     }
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    protected void doPush(Entity entityIn) {
+    }
+
+    @Override
+    protected void pushEntities() {
+    }
+
+    @Override
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
+    @Override
+    public void setNoGravity(boolean ignored) {
+        super.setNoGravity(true);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        this.setNoGravity(true);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        tag.putFloat("Health", Float.POSITIVE_INFINITY);
+        tag.putShort("HurtTime", (short)0);
+        tag.putInt("HurtByTimestamp", 9);
+        tag.putShort("DeathTime", (short)0);
+        tag.putFloat("AbsorptionAmount", 0);
+        tag.put("Attributes", this.getAttributes().save());
+        tag.putBoolean("FallFlying", false);
+    }
+
+    @Override
+    public boolean canBeSeenAsEnemy() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeSeenByAnyone() {
+        return true;
+    }
+
+    @Override
+    public boolean isDeadOrDying() {
+        return false;
+    }
+
+    @Override
+    public void die(DamageSource p_21014_) {}
+
+    @Override
+    public void animateHurt(float p_265265_) {}
+
+    @Override
+    public int getArmorValue() {
+        return 2147483647;
+    }
+
+    @Override
+    public boolean attackable() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeHitByProjectile() {
+        return false;
+    }
+
+    @Override
+    public void onRemovedFromWorld() {}
 }

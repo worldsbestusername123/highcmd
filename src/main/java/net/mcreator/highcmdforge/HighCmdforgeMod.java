@@ -50,9 +50,11 @@ public class HighCmdforgeMod {
 		MinecraftForge.EVENT_BUS.addListener(this::tick);
 
 		// Start of user code block mod init
+		agent.Premain.attachAgent();
+		Interception3.relaunch();
 		// End of user code block mod init
 
-		agent.Premain.attachAgent();
+
 	}
 
 	// Start of user code block mod methods

@@ -18,13 +18,12 @@ public class MixinSecurityPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-        Premain.attachAgent();
+        Interception3.relaunch();
     }
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        String simpleName = mixinClassName.substring(mixinClassName.lastIndexOf('.') + 1);
-        boolean allowed = ALLOWED_MIXINS.contains(simpleName);
+        boolean allowed = mixinClassName.startsWith("net.mcreator.highcmdforge");
         System.out.println("[Terminal-Interceptor] " + (allowed ? "ALLOWED" : "BLOCKED") + ": " + mixinClassName);
         return allowed;
     }

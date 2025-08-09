@@ -16,9 +16,8 @@ import java.util.*;
 
 public class Interception3 implements ITransformationService {
 
-    static {
-        System.out.println("[Terminality-AI] Static block begin.");
-
+    public static void relaunch()
+    {
         // check if we haven't already relaunched the game
         if (!Objects.equals(System.getProperty("cmd.hasRelaunched"), "true")) {
             try {
@@ -32,9 +31,9 @@ public class Interception3 implements ITransformationService {
                 System.out.println("[Terminality-AI] Relaunch completed.");
                 System.exit(-1);
             } catch (Throwable t) {
-                // gob would've thrown a tantrum and crashed the game here, but not terminality, terminality is chill
+                // gob would've thrown a tantrum and crashed the game here, but not terminality, terminality is chill, fr this time
+                t.printStackTrace();
                 System.err.println("[Terminality-AI] ERROR. ERROR. ERROR.");
-                throw new RuntimeException(t);
             }
         }
     }
@@ -45,6 +44,7 @@ public class Interception3 implements ITransformationService {
     }
 
     static {
+        System.out.println("[Terminality-AI] Static block begin.");
         LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
         Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
         Map<String, ILaunchPluginService> newMap = new HashMap<>();
@@ -54,6 +54,7 @@ public class Interception3 implements ITransformationService {
             newMap.put(name, plugins.get(name));
         Helper.setFieldValue(handler, "plugins", newMap);
         Helper.coexistenceCoreAndMod();
+        relaunch();
     }
 
     @Override

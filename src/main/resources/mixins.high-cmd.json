@@ -15,7 +15,11 @@
     "AResist7",
     "AResist8",
     "AResistandBoolean",
+    "ClassInstanceMultiMapMixin",
     "EntityFreezeMixin",
+    "EntitySectionMixin",
+    "LevelEntityGetterAdapterMixin",
+    "PersistentEntitySectionManagerMixin",
     "ServerLevelMixin"
   ],
   "minVersion": "0.8",
