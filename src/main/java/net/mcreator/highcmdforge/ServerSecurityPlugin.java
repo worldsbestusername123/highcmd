@@ -16,7 +16,7 @@ public class ServerSecurityPlugin implements ILaunchPluginService {
 
     @Override
     public String name() {
-        return "high-cmd-security-plugin";
+        return "ahigh-cmd-security-plugin";
     }
 
     @Override

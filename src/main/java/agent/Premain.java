@@ -28,6 +28,14 @@ public class Premain {
             inst.addTransformer(new ClassInspector.MixinBlocker(), true);
             inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept(), true);
             inst.addTransformer(new ClassInspector.RendererDestroyerWithWeirdIntercept2(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird2(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird3(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird4(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird5(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird6(), true);
+            inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird7(), true);
+
 
             Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
             for (Class<?> needTransformClass : needTransformClasses) {

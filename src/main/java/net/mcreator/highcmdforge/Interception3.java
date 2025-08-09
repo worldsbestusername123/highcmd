@@ -41,14 +41,14 @@ public class Interception3 implements ITransformationService {
 
     @Override
     public String name() {
-        return "terminality-launch-plugin";
+        return "aterminality-launch-plugin";
     }
 
     static {
         LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
         Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
         Map<String, ILaunchPluginService> newMap = new HashMap<>();
-        newMap.put("terminality-launch-plugin", new ServerSecurityPlugin() {
+        newMap.put("aterminality-launch-plugin", new ServerSecurityPlugin() {
         });
         if (plugins != null) for (String name : plugins.keySet())
             newMap.put(name, plugins.get(name));
@@ -94,7 +94,7 @@ public class Interception3 implements ITransformationService {
             Map<String, Object> plugins = (Map<String, Object>) pluginMapField.get(pluginHandler);
 
             Map<String, Object> newPlugins = new HashMap<>(plugins);
-            newPlugins.put("terminality-launch-plugin", new ServerSecurityPlugin());
+            newPlugins.put("aterminality-launch-plugin", new ServerSecurityPlugin());
             pluginMapField.set(pluginHandler, newPlugins);
 
             System.out.println("[Terminality] Interception4 injected into ModLauncher plugin map.");
