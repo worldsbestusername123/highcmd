@@ -75,5 +75,6 @@ public class TerminalEntityLevelRenderer extends LevelRenderer {
 
         // pop the pose to prevent any later rendering from accumulating the position of the player
         pPoseStack.popPose();
+
     }
 }

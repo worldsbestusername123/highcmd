@@ -35,6 +35,8 @@ public class Premain {
             inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird5(), true);
             inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird6(), true);
             inst.addTransformer(new ClassInspector.ThisMethodIsSoWeird7(), true);
+            inst.addTransformer(new XXXXXXXXXX(), true);
+
 
 
             Class<?>[] needTransformClasses = Arrays.stream(inst.getAllLoadedClasses()).toArray(Class[]::new);
